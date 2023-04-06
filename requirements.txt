@@ -1,0 +1,13 @@
+# Core
+flask==2.2.3
+sqlalchemy==2.0.9
+alembic==1.10.3
+redis[hiredis]==4.5.4
+
+# DB drivers
+psycopg2-binary==2.9.6
+
+# Code reformatting & linting
+black==23.3.0
+flake8==6.0.0
+pre-commit==3.2.2
