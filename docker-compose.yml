@@ -1,0 +1,42 @@
+version: "3.8"
+
+volumes:
+  postgres_data: {}
+  redis_data: {}
+
+services:
+  app:
+    build: "."
+    ports:
+      - "5000:5000"
+    user: "1000"
+    environment:
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+    profiles:
+      - full_run
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:15-alpine3.17
+    ports:
+      - "15432:15432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data:rw
+    env_file:
+      - .env
+    profiles:
+      - full_run
+      - local_dev
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/var/lib/redis/data:rw
+    profiles:
+      - full_run
+      - local_dev
