@@ -1,11 +1,15 @@
 from flask import Flask
 
+from app.api.api_v1.api_register import api_router
+
 app = Flask(__name__)
+
+app.register_blueprint(api_router)
 
 
 @app.get("/")
 def main_route():
-    return "Hello, I am working"
+    return {"msg": "Hello, I am working"}
 
 
 if __name__ == "__main__":
