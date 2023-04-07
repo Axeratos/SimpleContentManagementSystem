@@ -3,6 +3,7 @@ flask==2.2.3
 sqlalchemy==2.0.9
 alembic==1.10.3
 redis[hiredis]==4.5.4
+pydantic[dotenv]==1.10.7
 
 # DB drivers
 psycopg2-binary==2.9.6
