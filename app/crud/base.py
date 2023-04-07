@@ -12,7 +12,7 @@ class CRUDBase:
         self.model = model
 
     def get(self, **kwargs):
-        return self.session.scalar(select(self.model).where(**kwargs))
+        return self.session.scalar(select(self.model).filter_by(**kwargs))
 
     def get_all(self):
         return self.session.scalars(select(self.model)).all()

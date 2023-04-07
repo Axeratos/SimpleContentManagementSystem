@@ -1,9 +1,11 @@
-from flask import Blueprint, request, make_response
+from flask import Blueprint, request, make_response, session
 
-from app.core import hash_password
+from app.core import hash_password, verify_password
+from app.core.security import create_token
 from app.crud import CRUDUser
 from app.db import get_db_session
-from app.schemas import UserCreate, UserSchema
+from app.db.redis_connection import redis_db
+from app.schemas import UserCreate, UserSchema, UserLogin
 from app.schemas.services.data_validation import validate, generate_user_exists_error
 
 router = Blueprint("auth", __name__, url_prefix="/auth")
@@ -14,7 +16,7 @@ router = Blueprint("auth", __name__, url_prefix="/auth")
 def register():
     user_data = request.get_json()
     db_session = get_db_session()
-    user_crud = CRUDUser(db_session)
+    user_crud = CRUDUser(session=db_session)
     if user_object := user_crud.get_by_phone_email(phone_nuber=user_data["phone_number"], login=user_data["login"]):
         error_message = generate_user_exists_error(
             user_object=user_object,
@@ -28,10 +30,29 @@ def register():
 
 
 @router.post("/login")
+@validate(body_model=UserLogin)
 def login():
-    pass
+    login_data = request.get_json()
+    db_session = get_db_session()
+    user_crud = CRUDUser(session=db_session)
+    user_object = user_crud.get(login=login_data["login"])
+    if not user_object:
+        return make_response({"field": "login", "msg": "User does not exist"}, 404)
+    elif not verify_password(login_data["password"], user_object.password):
+        return make_response({"field": "password", "msg": "Password is incorrect"}, 400)
+
+    access_token = create_token()
+    redis_db.set(access_token, user_object.pk)
+
+    session["jwt"] = access_token
+    return access_token
 
 
 @router.post("/logout")
 def logout():
-    pass
+    if "jwt" in session:
+        access_token = session.pop("jwt")
+        redis_db.delete(access_token)
+    else:
+        redis_db.delete(request.get_json()["jwt"])
+    return {"msg": "User logged out successfully"}
