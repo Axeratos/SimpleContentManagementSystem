@@ -19,6 +19,11 @@ class UserUpdate(BaseUserSchema):
     pass
 
 
+class UserLogin(BaseUserSchema):
+    login: EmailStr
+    password: str
+
+
 class UserSchema(BaseUserSchema):
     name: str
     phone_number: str
