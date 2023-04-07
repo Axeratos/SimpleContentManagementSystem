@@ -16,6 +16,8 @@ class Config(BaseSettings):
 
     JWT_SECRET_KEY: str
 
+    APP_SECRET_KEY: str
+
     def get_db_url(self):
         return (
             f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
