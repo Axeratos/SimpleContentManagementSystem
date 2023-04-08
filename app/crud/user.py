@@ -3,7 +3,7 @@ from sqlalchemy import select, or_
 from sqlalchemy.orm import Session
 
 from app import User
-from app.crud import CRUDBase
+from app.crud.base import CRUDBase
 
 
 class CRUDUser(CRUDBase):

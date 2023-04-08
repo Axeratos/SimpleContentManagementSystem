@@ -1,2 +1,2 @@
-from .base import CRUDBase
 from .user import CRUDUser
+from .post import CRUDPost
