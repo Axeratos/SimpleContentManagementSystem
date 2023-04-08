@@ -27,8 +27,9 @@ def register():
         )
         return make_response(error_message, 400)
     user_data["password"] = hash_password(user_data["password"])
-    new_user = user_crud.create(create_data=user_data)
-    return make_response(UserSchema.from_orm(new_user).dict(), 201)
+    user_data_validated = UserCreate(**user_data)
+    new_user = user_crud.create(create_data=user_data_validated.dict())
+    return make_response(UserSchema.from_orm(new_user).dict(exclude={"password"}), 201)
 
 
 @router.post("/login")
