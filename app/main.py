@@ -1,7 +1,7 @@
 from flask import Flask
 
-from app.api.api_v1.api_register import api_router
-from app.core.config import app_config
+from api.api_v1.api_register import api_router
+from core.config import app_config
 
 
 def create_app() -> Flask:

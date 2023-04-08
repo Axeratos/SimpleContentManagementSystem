@@ -2,8 +2,8 @@ from pydantic import EmailStr
 from sqlalchemy import select, or_
 from sqlalchemy.orm import Session
 
-from app import User
-from app.crud.base import CRUDBase
+from models import User
+from crud.base import CRUDBase
 
 
 class CRUDUser(CRUDBase):

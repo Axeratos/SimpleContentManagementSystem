@@ -2,13 +2,13 @@ from datetime import timedelta
 
 from flask import Blueprint, request, make_response, session
 
-from app.core import hash_password, verify_password
-from app.core.security import create_token
-from app.crud import CRUDUser
-from app.db import get_db_session
-from app.db.redis_connection import redis_db
-from app.schemas import UserCreate, UserSchema, UserLogin
-from app.schemas.services.data_validation import validate, generate_user_exists_error
+from core import hash_password, verify_password
+from core.security import create_token
+from crud import CRUDUser
+from db import get_db_session
+from db.redis_connection import redis_db
+from schemas import UserCreate, UserSchema, UserLogin
+from schemas.services.data_validation import validate, generate_user_exists_error
 
 router = Blueprint("auth", __name__, url_prefix="/auth")
 

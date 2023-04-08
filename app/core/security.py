@@ -3,7 +3,7 @@ from uuid import uuid4
 from jose import jwt
 from passlib.context import CryptContext
 
-from app.core.config import app_config
+from core.config import app_config
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

@@ -1,10 +1,10 @@
 from flask import Blueprint, request, session, make_response
 
-from app.crud import CRUDPost
-from app.db import get_db_session
-from app.schemas import PostCreate, PostSchema, PostUpdate
-from app.schemas.query_schemas import PaginationQuerySchema
-from app.schemas.services.data_validation import validate, get_user_id
+from crud import CRUDPost
+from db import get_db_session
+from schemas import PostCreate, PostSchema, PostUpdate
+from schemas.query_schemas import PaginationQuerySchema
+from schemas.services.data_validation import validate, get_user_id
 
 router = Blueprint("post", __name__, url_prefix="/post")
 

@@ -3,7 +3,7 @@ from typing import Type
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.db import Base
+from db import Base
 
 
 class CRUDBase:

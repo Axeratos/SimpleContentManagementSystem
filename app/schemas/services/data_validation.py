@@ -4,8 +4,8 @@ from flask import request, make_response
 
 from pydantic import BaseModel, ValidationError, EmailStr
 
-from app import User
-from app.db.redis_connection import redis_db
+from models import User
+from db.redis_connection import redis_db
 
 
 def validate(

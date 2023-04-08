@@ -1,8 +1,8 @@
 from sqlalchemy import select, asc, desc
 from sqlalchemy.orm import Session
 
-from app.crud.base import CRUDBase
-from app.models import Post
+from crud.base import CRUDBase
+from models import Post
 
 
 class CRUDPost(CRUDBase):
