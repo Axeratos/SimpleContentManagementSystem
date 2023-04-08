@@ -26,13 +26,13 @@ class CRUDBase:
         return model_object
 
     def update(self, old_object: Type[Base], update_data: dict):
-        for field in old_object:
-            if field in update_data:
-                setattr(old_object, field, update_data[field])
+        for key in update_data:
+            setattr(old_object, key, update_data[key])
+        self.session.flush()
         return old_object
 
-    def delete(self, pk: int, user_id: int):
-        db_object = self.get(pk=pk, user_id=user_id)
+    def delete(self, **kwargs):
+        db_object = self.get(**kwargs)
         if not db_object:
             return
         self.session.delete(db_object)
