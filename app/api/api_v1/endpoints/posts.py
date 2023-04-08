@@ -15,11 +15,7 @@ def get_all_posts():
     pagination_params = PaginationQuerySchema(**request.args)
     db_session = get_db_session()
     crud_post = CRUDPost(session=db_session)
-    queryset = crud_post.get_paginated(
-        pagination_params.limit,
-        pagination_params.offset,
-        pagination_params.ordering.value,
-    )
+    queryset = crud_post.get_paginated(**pagination_params.dict())
     return [PostSchema.from_orm(post_object).dict() for post_object in queryset]
 
 
