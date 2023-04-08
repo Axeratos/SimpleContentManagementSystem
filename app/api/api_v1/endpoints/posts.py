@@ -58,7 +58,7 @@ def update_post(post_id):
         return make_response({"msg": "Post does not exist"}, 404)
     update_data_validated = PostUpdate(**request.get_json())
     updated_object = crud_post.update(old_object, update_data_validated.dict(exclude_unset=True))
-    return make_response(PostSchema.from_orm(updated_object).dict(), 200)
+    return PostSchema.from_orm(updated_object).dict()
 
 
 @router.delete("/<int:post_id>")
