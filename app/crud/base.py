@@ -29,6 +29,7 @@ class CRUDBase:
         for key in update_data:
             setattr(old_object, key, update_data[key])
         self.session.flush()
+        self.session.commit()
         return old_object
 
     def delete(self, **kwargs):
@@ -36,4 +37,6 @@ class CRUDBase:
         if not db_object:
             return
         self.session.delete(db_object)
+        self.session.flush()
+        self.session.commit()
         return db_object
