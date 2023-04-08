@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, validator
 
 
 class BaseUserSchema(BaseModel):
@@ -6,6 +6,12 @@ class BaseUserSchema(BaseModel):
     phone_number: str | None
     login: EmailStr | None
     password: str | None
+
+    @validator("phone_number")
+    def validate_phone_number(cls, value):
+        if value and len(value) > 15:
+            raise ValueError("Phone number is too long. Max length is 15 characters")
+        return value
 
 
 class UserCreate(BaseUserSchema):
@@ -28,7 +34,6 @@ class UserSchema(BaseUserSchema):
     name: str
     phone_number: str
     login: str
-    password: str = Field(exclude=True)
 
     class Config:
         orm_mode = True
