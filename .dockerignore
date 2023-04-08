@@ -3,3 +3,4 @@
 !app
 !docker-compose.yml
 !requirements.txt
+!docker/app
