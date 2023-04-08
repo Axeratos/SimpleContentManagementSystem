@@ -5,6 +5,7 @@ from flask import request, make_response
 from pydantic import BaseModel, ValidationError, EmailStr
 
 from app import User
+from app.db.redis_connection import redis_db
 
 
 def validate(
@@ -41,6 +42,17 @@ def validate(
         return wrapper
 
     return decorate
+
+
+def get_user_id(access_token: str | None):
+    user_id, response = None, None
+    if not access_token:
+        response = make_response({"msg": "User not authorized"}, 401)
+        return user_id, response
+    user_id = redis_db.get(access_token)
+    if not user_id:
+        response = make_response({"msg": "User not authorized"}, 401)
+    return user_id, response
 
 
 def generate_user_exists_error(user_object: User, phone: str, login: EmailStr) -> dict:
